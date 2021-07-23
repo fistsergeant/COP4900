@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>
+            Excel file upload and processing : Django Example : ThePythonDjango.Com
+        </title>
+    </head>
+    <body style="margin-top: 30px;margin-left: 30px;">
+        <h1>No Wait Model</h1>
+        <form action="{% url "xl_calculation:index" %}" method="post" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <input type="file"
+                   title="Upload excel file"
+                   name="excel_file"
+                   style="border: 1px solid black; padding: 5px;"
+                   required="required">
+            <p>
+            <input type="submit"
+                   value="Upload"
+                   style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+        </form>
+
+        <form action="{% url "xl_calculation:download" %}" method="post" enctype="multipart/form-data", name="downloadForm" style="display:none;">
+            {% csrf_token %}
+            <!-- <input type="file"
+                   title="Upload excel file"
+                   name="excel_file"
+                   style="border: 1px solid black; padding: 5px;"
+                   required="required"> -->
+            <p>
+            <input type="submit"
+                   value="Download"
+                   style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+        </form>
+
+        <p></p>
+        <hr>
+
+        {% for row in excel_data %}
+            {% for cell in row %}
+                {{ cell }}&nbsp;&nbsp;
+            {% endfor %}
+            <br>
+        {% endfor %}
+        {% if created %}
+        <script>
+            document.forms['downloadForm'].submit()
+        </script>
+                
+        
+           
+        {% endif %}
+    </body>
+</html>
